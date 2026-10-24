@@ -20,8 +20,9 @@ Single-package Next.js 16 app (App Router, `src/`). No test framework, no CI.
 
 ## Next.js config surprises (next.config.ts)
 
-- `cacheComponents: true` + `partialPrefetching: true`: uncached dynamic data must be authored with `use cache` / Suspense or the build fails. Relevant docs live in `node_modules/next/dist/docs/` (directives `use-cache*`, guide `migrating-to-cache-components`).
+- `cacheComponents` / `partialPrefetching` are currently **false** (toggled on and off before; check the file before relying on either — when `true`, uncached dynamic data must be inside `use cache` / Suspense or the build fails. Docs: `node_modules/next/dist/docs/` — directives `use-cache*`, guide `migrating-to-cache-components`).
 - `reactCompiler: true`: React Compiler memoizes automatically. Do not add `useMemo`/`useCallback`/`React.memo` for render performance.
+- `images.remotePatterns` allows **any https host** — destination card images come from an external API with arbitrary URLs.
 
 ## Tailwind v4 — CSS-first, no config file
 

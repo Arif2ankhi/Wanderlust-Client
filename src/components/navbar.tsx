@@ -4,6 +4,7 @@ import { User } from "lucide-react"
 const navLinks = [
   { href: "/", label: "Home", active: true },
   { href: "/destinations", label: "Destinations" },
+  { href: "/add-destination", label: "Add Destination" },
   { href: "/bookings", label: "My Bookings" },
   { href: "/admin", label: "Admin" },
 ]
