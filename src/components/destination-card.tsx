@@ -2,6 +2,7 @@ import Image from "next/image"
 import { ArrowUpRight, CalendarDays, MapPin, Star } from "lucide-react"
 
 import { Card, CardContent } from "@/components/ui/card"
+import Link from "next/link"
 
 export interface DestinationCardProps {
   image: string
@@ -57,13 +58,14 @@ export function DestinationCard({
           {duration}
         </div>
 
-        <a
+        <Link
           href={href}
+          // href={`/destination/${destination._id}`}
           className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-sky-500 transition-colors hover:text-sky-600"
         >
           Book Now
           <ArrowUpRight className="size-3.5" />
-        </a>
+        </Link>
       </CardContent>
     </Card>
   )

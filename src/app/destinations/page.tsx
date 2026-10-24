@@ -39,7 +39,7 @@ async function fetchDestinations(): Promise<PackageRow[]> {
       title: item.name,
       price: Number(item.price) || 0,
       duration: item.duration,
-      href: "#",
+      href: `/destinations/${item._id}`,
     }))
   } catch (error) {
     console.error("Failed to load destinations:", error)

@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { PackageCheck, Trash2 } from "lucide-react";
 
@@ -17,6 +17,8 @@ import { Textarea } from "@/components/ui/textarea";
 
 const categories = ["Beach", "Mountain", "City", "Adventure", "Cultural"];
 
+const ADD_DESTINATION_URL = "http://localhost:8000/add-destination";
+
 const initialForm = {
   name: "",
   country: "",
@@ -29,25 +31,49 @@ const initialForm = {
 };
 
 export default function AddDestinationPage() {
+  const router = useRouter();
   const [form, setForm] = useState(initialForm);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const update = (field: keyof typeof form, value: string) =>
     setForm((current) => ({ ...current, [field]: value }));
 
+  const resetForm = () => {
+    setForm(initialForm);
+    setError(null);
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSubmitting(true);
+    setError(null);
 
-    const res = await fetch("http://localhost:8000/add-destination", {
+    try {
+      const res = await fetch(ADD_DESTINATION_URL, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(form)
-    })
+        body: JSON.stringify(form),
+      });
 
-    const data =await res.json()
-    console.log(data)
-    
+      if (!res.ok) {
+        throw new Error(`Adding destination failed with status ${res.status}`);
+      }
+
+      // Land on the list so the freshly added card is visible (it fetches no-store).
+      router.push("/destinations");
+    } catch (err) {
+      console.error("Failed to add destination:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong while adding the destination."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
 
@@ -63,6 +89,15 @@ export default function AddDestinationPage() {
           onSubmit={handleSubmit}
           className="mt-10 rounded-sm border border-border bg-white p-8 shadow-sm"
         >
+          {error && (
+            <div
+              role="alert"
+              className="mb-5 rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive"
+            >
+              {error}
+            </div>
+          )}
+
           <div className="grid gap-5">
             {/* Destination Name */}
             <div className="grid gap-2">
@@ -182,6 +217,7 @@ export default function AddDestinationPage() {
             <Button
               type="button"
               variant="outline"
+              onClick={resetForm}
               className="border-destructive/30 bg-background text-destructive hover:bg-destructive/5 hover:text-destructive"
             >
               <Trash2 />
@@ -189,10 +225,11 @@ export default function AddDestinationPage() {
             </Button>
             <Button
               type="submit"
+              disabled={submitting}
               className="bg-[#00A8E8] text-white hover:bg-[#0095d1]"
             >
               <PackageCheck />
-              Add Travel Package
+              {submitting ? "Adding..." : "Add Travel Package"}
             </Button>
           </div>
         </form>
