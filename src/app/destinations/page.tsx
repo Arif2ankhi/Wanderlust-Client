@@ -6,8 +6,8 @@ import {
 } from "@/components/destination-card"
 import { Skeleton } from "@/components/ui/skeleton"
 
-const DESTINATIONS_API_URL =
-  process.env.DESTINATIONS_API_URL ?? "http://localhost:8000/destinations"
+// const DESTINATIONS_API_URL =
+  // process.env.DESTINATIONS_API_URL ?? "http://localhost:8000/destinations"
 
 interface ApiDestination {
   _id: string
@@ -25,7 +25,7 @@ type PackageRow = DestinationCardProps & { id: string }
 
 async function fetchDestinations(): Promise<PackageRow[]> {
   try {
-    const res = await fetch(DESTINATIONS_API_URL, { cache: "no-store" })
+    const res = await fetch('http://localhost:8000/destinations', { cache: "no-store" })
     if (!res.ok) {
       throw new Error(`Destinations API responded with ${res.status}`)
     }
