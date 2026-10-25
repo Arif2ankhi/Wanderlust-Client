@@ -1,15 +1,36 @@
-import Link from "next/link"
-import { User } from "lucide-react"
+"use client";
+import Link from "next/link";
+import { User } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverDescription,
+  PopoverHeader,
+  PopoverTitle,
+  PopoverTrigger
+} from "@/components/ui/popover";
+import { Button } from "./ui/button";
 
 const navLinks = [
   { href: "/", label: "Home", active: true },
   { href: "/destinations", label: "Destinations" },
   { href: "/add-destination", label: "Add Destination" },
   { href: "/bookings", label: "My Bookings" },
-  { href: "/admin", label: "Admin" },
-]
+  { href: "/admin", label: "Admin" }
+];
 
 export function Navbar() {
+  const { data: session } = authClient.useSession();
+
+  const user = session?.user;
+
+  const handleSignout = () => {
+    authClient.signOut();
+  };
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <nav className="mx-auto flex h-14 max-w-screen-2xl items-center justify-between px-6">
@@ -45,14 +66,61 @@ export function Navbar() {
             <User className="size-4" />
             Profile
           </Link>
-          <Link href="/login" className="transition-colors hover:text-sky-500">
-            Login
-          </Link>
-          <Link href="/signup" className="transition-colors hover:text-sky-500">
-            Sign Up
-          </Link>
+          {/* Avatar added from shadcn */}
+          {/* <Avatar>
+            <AvatarImage
+              referrerPolicy="no-referrer"
+              src={user?.image as string}
+            />
+            <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
+          </Avatar> */}
+
+          {/* Popover from shadchen */}
+          {user ? (
+            <Popover>
+              <PopoverTrigger
+                render={
+                  <Avatar>
+                    <AvatarImage
+                      referrerPolicy="no-referrer"
+                      src={user?.image as string}
+                    />
+                    <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
+                  </Avatar>
+                }
+              >
+                Open Popover
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverHeader>
+                  <PopoverTitle>{user?.name}</PopoverTitle>
+                  <PopoverDescription>
+                    <p>{user?.email}</p>
+                    <Button onClick={handleSignout} variant={"destructive"}>
+                      Signout
+                    </Button>
+                  </PopoverDescription>
+                </PopoverHeader>
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="transition-colors hover:text-sky-500"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="transition-colors hover:text-sky-500"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </header>
-  )
+  );
 }
