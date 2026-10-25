@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Trash2 } from "lucide-react";
 import { redirect } from "next/navigation";
 
-const DeleteDestinationDialog = ({id}) => {
+const DeleteDestinationDialog = ({id} : {id: string}) => {
 
     const handleDeleteDsetination= async()=>{
        
@@ -24,8 +24,8 @@ const DeleteDestinationDialog = ({id}) => {
         method:'DELETE',
 
        })
-       const data = await res.json();
-       console.log(data);
+       await res.json();
+      
 
        redirect('/destinations')
     }

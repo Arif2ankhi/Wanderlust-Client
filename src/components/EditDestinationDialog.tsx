@@ -26,23 +26,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { IDestination } from "@/lib/types/destination";
 
 const categories = ["Beach", "Mountain", "City", "Adventure", "Cultural"];
 
-// const ADD_DESTINATION_URL = "http://localhost:8000/add-destination";
 
-// const initialForm = {
-//   name: "",
-//   country: "",
-//   category: "",
-//   price: "",
-//   duration: "",
-//   departureDate: "",
-//   imageUrl: "",
-//   description: "",
-// };
-
-const EditDestinationDialog = ({destination}) => {
+const EditDestinationDialog = ({destination}: {destination: IDestination}) => {
 
     console.log(destination);
 
