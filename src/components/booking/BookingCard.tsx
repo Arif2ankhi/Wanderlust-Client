@@ -20,7 +20,27 @@ const handleBooking = async(e)=>{
     e.preventDefault()
 
     const departureDate = e.target.departureDate.value
-    console.log(departureDate);
+    
+
+    const data = {
+        username: user?.name,
+        email: user?.email,
+        image: user?.image,
+        ...destination,
+        departureDate: departureDate,
+        bookingDate: new Date()
+        
+    }
+    const res = await fetch('http://localhost:8000/booking', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
+    })
+    const bookingRes = await res.json()
+    console.log(bookingRes);
+
 }
 
   return (
