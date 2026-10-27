@@ -1,7 +1,6 @@
 "use client";
-import { ArrowRight, CalendarDays, Check } from "lucide-react";
+import { ArrowRight,  Check } from "lucide-react";
 import { Button } from "../ui/button";
-// import { Card, CardContent } from "../ui/card";
 import { Card, CardContent } from "@/components/ui/card";
 import { IDestination } from "@/lib/types/destination";
 import { authClient } from "@/lib/auth-client";
@@ -20,7 +19,7 @@ const handleBooking = async(e)=>{
     e.preventDefault()
 
     const departureDate = e.target.departureDate.value
-    
+    console.log(departureDate);
 
     const data = {
         username: user?.name,

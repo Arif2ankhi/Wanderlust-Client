@@ -6,23 +6,23 @@ import { Calendar, Eye, Ticket, XCircle } from "lucide-react";
 import { Button } from "../ui/button";
 import { IBooking } from "@/lib/types/booking";
 
-// import { redirect } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const MyBookingCard = ({ booking }: { booking:IBooking }) => {
  console.log(booking)
 
-//  const handleCancleBooking = async() => {
-//     const res = await fetch(`http://localhost:8000/my-bookings/${booking._id}`, {
-//         method:'DELETE'
-//     })
-//     const data = await res.json() 
-//     console.log(data)
+ const handleCancleBooking = async() => {
+    const res = await fetch(`http://localhost:8000/my-bookings/${booking._id}`, {
+        method:'DELETE'
+    })
+    const data = await res.json() 
+    console.log(data)
 
-//     redirect('/my-bookings')
+    redirect('/my-bookings')
 
 
 
-//  }
+ }
     return (
     <Card
       key={booking._id}
@@ -67,7 +67,7 @@ const MyBookingCard = ({ booking }: { booking:IBooking }) => {
           {/* Bottom section: Action Buttons */}
           <div className="flex justify-end gap-3 mt-6">
             <Button
-            // onClick={handleCancleBooking}
+            onClick={handleCancleBooking}
               variant="outline"
               className="text-red-500 border-red-200 hover:bg-red-50 hover:text-red-600 gap-2"
             >
