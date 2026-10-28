@@ -14,10 +14,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { authClient } from "@/lib/auth-client";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const categories = ["Beach", "Mountain", "City", "Adventure", "Cultural"];
 
-const ADD_DESTINATION_URL = "http://localhost:8000/add-destination";
+// const ADD_DESTINATION_URL = "http://localhost:8000/add-destination";
 
 const initialForm = {
   name: "",
@@ -46,14 +48,27 @@ export default function AddDestinationPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // const {data, error} = await authClient.token()
+    // // console.log(data);
+    // const token = data?.token
+
     setSubmitting(true);
     setError(null);
 
+   
+
     try {
-      const res = await fetch(ADD_DESTINATION_URL, {
+
+      //  const {data, error} = await authClient.token()
+      // const token = data?.token
+      const token = getTokenFromClient();
+
+      const res = await fetch("http://localhost:8000/add-destination", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
         },
         body: JSON.stringify(form),
       });

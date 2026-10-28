@@ -1,5 +1,6 @@
 import { Banner } from "@/components/banner"
 import { Cta } from "@/components/cta"
+import Featured from "@/components/featured"
 import { Footer } from "@/components/footer"
 import { Navbar } from "@/components/navbar"
 import { Testimonials } from "@/components/testimonials"
@@ -10,6 +11,7 @@ export default function Home() {
     <>
       
       <Banner />
+      <Featured/>
       <WhyChooseUs />
       <Testimonials />
       <Cta />

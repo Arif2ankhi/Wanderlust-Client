@@ -27,13 +27,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { IDestination } from "@/lib/types/destination";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const categories = ["Beach", "Mountain", "City", "Adventure", "Cultural"];
 
 
 const EditDestinationDialog = ({destination}: {destination: IDestination}) => {
 
-    console.log(destination);
+    // console.log(destination);
 
     const router = useRouter();
       const [form, setForm] = useState(destination);
@@ -44,7 +45,8 @@ const EditDestinationDialog = ({destination}: {destination: IDestination}) => {
         setForm((current) => ({ ...current, [field]: value }));
     
       const resetForm = () => {
-        setForm(initialForm);
+        // setForm(initialForm);
+        setForm(destination);
         setError(null);
       };
     
@@ -54,19 +56,25 @@ const EditDestinationDialog = ({destination}: {destination: IDestination}) => {
         const {_id, ...updatedData} = form
         setSubmitting(true);
         setError(null);
+
+        // const token = getTokenFromClient()
     
         try {
+
+          const token =  await getTokenFromClient()
+
           const res = await fetch(`http://localhost:8000/destination/${destination._id}`, {
         //   const res = await fetch(`DESTINATION_URL/${destination._id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
+              authorization: `Bearer ${token}`
             },
             body: JSON.stringify(updatedData),
           });
 
           const data = await res.json()
-          console.log(data);
+          // console.log(data);
     
           if (!res.ok) {
             throw new Error(`Adding destination failed with status ${res.status}`);
@@ -75,7 +83,7 @@ const EditDestinationDialog = ({destination}: {destination: IDestination}) => {
           // Land on the list so the freshly added card is visible (it fetches no-store).
           router.push("/destinations");
         } catch (err) {
-          console.error("Failed to add destination:", err);
+          // console.error("Failed to add destination:", err);
           setError(
             err instanceof Error
               ? err.message

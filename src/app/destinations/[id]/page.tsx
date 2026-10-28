@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button"
 import EditDestinationDialog from "@/components/EditDestinationDialog"
 import DeleteDestinationDialog from "@/components/DeleteDestinationDialog"
 import BookingCard from "@/components/booking/BookingCard"
+import { auth } from "@/lib/auth"
+import { headers } from "next/headers"
+import { getTokenServer } from "@/lib/getTokenFromServer"
 
 // const DESTINATIONS_API_URL =
   // process.env.DESTINATIONS_API_URL ?? "http://localhost:8000"
@@ -26,9 +29,18 @@ interface ApiDestination {
 async function getDestination(id: string): Promise<ApiDestination | null> {
   try {
     // const res = await fetch(`${DESTINATIONS_API_URL}/destination/${id}`, {
+    // const jwtToken = await auth.api.getToken({
+    //   headers: await headers()
+
+    // })
+    
+    // const token = jwtToken?.token;
+
+    const token = await getTokenServer()
+
     const res = await fetch(`http://localhost:8000/destination/${id}`, {
       headers: {
-        authorization: 'user logged in'
+        authorization: `Bearer ${token}`
       }
     }
     // {cache: "no-store",}

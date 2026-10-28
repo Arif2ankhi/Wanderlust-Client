@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import MyBookingCard from "@/components/booking/MyBookingCard";
 import { IBooking } from "@/lib/types/booking";
+import { getTokenServer } from "@/lib/getTokenFromServer";
 
 const MyBookingsPage = async () => {
   const session = await auth.api.getSession({
@@ -10,7 +11,14 @@ const MyBookingsPage = async () => {
 
   const user = session?.user;
 
-  const res = await fetch(`http://localhost:8000/my-bookings/${user?.email}`);
+  const token = await getTokenServer();
+
+  const res = await fetch(`http://localhost:8000/my-bookings/${user?.email}`, {
+       headers: {
+          authorization: `Bearer ${token}`
+        },
+        
+  });
   const bookings: IBooking[] = await res.json();
 
   // console.log(bookings);
