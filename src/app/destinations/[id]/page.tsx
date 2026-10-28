@@ -8,8 +8,8 @@ import EditDestinationDialog from "@/components/EditDestinationDialog"
 import DeleteDestinationDialog from "@/components/DeleteDestinationDialog"
 import BookingCard from "@/components/booking/BookingCard"
 
-const DESTINATIONS_API_URL =
-  process.env.DESTINATIONS_API_URL ?? "http://localhost:8000"
+// const DESTINATIONS_API_URL =
+  // process.env.DESTINATIONS_API_URL ?? "http://localhost:8000"
 
 interface ApiDestination {
   _id: string
@@ -25,9 +25,14 @@ interface ApiDestination {
 
 async function getDestination(id: string): Promise<ApiDestination | null> {
   try {
-    const res = await fetch(`${DESTINATIONS_API_URL}/destination/${id}`, {
-      cache: "no-store",
-    })
+    // const res = await fetch(`${DESTINATIONS_API_URL}/destination/${id}`, {
+    const res = await fetch(`http://localhost:8000/destination/${id}`, {
+      headers: {
+        authorization: 'user logged in'
+      }
+    }
+    // {cache: "no-store",}
+    )
     if (!res.ok) return null
     return await res.json()
   } catch (error) {
