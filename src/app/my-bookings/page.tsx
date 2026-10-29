@@ -13,7 +13,7 @@ const MyBookingsPage = async () => {
 
   const token = await getTokenServer();
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_UR}/my-bookings/${user?.email}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/my-bookings/${user?.email}`, {
        headers: {
           authorization: `Bearer ${token}`
         },

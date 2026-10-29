@@ -31,7 +31,7 @@ const handleBooking = async(e: React.SubmitEvent<HTMLElement>)=>{
         bookingDate: new Date()
         
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_UR}/booking`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/booking`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",
