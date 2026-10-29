@@ -25,7 +25,7 @@ type PackageRow = DestinationCardProps & { id: string }
 
 async function fetchDestinations(): Promise<PackageRow[]> {
   try {
-    const res = await fetch('http://localhost:8000/destinations', { cache: "no-store" })
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_UR}/destinations`, { cache: "no-store" })
     if (!res.ok) {
       throw new Error(`Destinations API responded with ${res.status}`)
     }

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 // import { IDestination } from "@/lib/types/destination";
 import { authClient } from "@/lib/auth-client";
 import { Input } from "../ui/input";
-import { formatDay } from "react-day-picker";
+// import { formatDay } from "react-day-picker";
 import { IDestination } from "@/lib/types/destination";
 
 const BookingCard = ({ destination }: { destination: IDestination }) => {
@@ -31,7 +31,7 @@ const handleBooking = async(e: React.SubmitEvent<HTMLElement>)=>{
         bookingDate: new Date()
         
     }
-    const res = await fetch('http://localhost:8000/booking', {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_UR}/booking`, {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",

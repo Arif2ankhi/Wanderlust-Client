@@ -38,7 +38,7 @@ async function getDestination(id: string): Promise<ApiDestination | null> {
 
     const token = await getTokenServer()
 
-    const res = await fetch(`http://localhost:8000/destination/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_UR}/destination/${id}`, {
       headers: {
         authorization: `Bearer ${token}`
       }
