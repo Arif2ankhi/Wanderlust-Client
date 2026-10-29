@@ -2,12 +2,13 @@
 import { ArrowRight,  Check } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { IDestination } from "@/lib/types/destination";
+// import { IDestination } from "@/lib/types/destination";
 import { authClient } from "@/lib/auth-client";
 import { Input } from "../ui/input";
 import { formatDay } from "react-day-picker";
+import { IDestination } from "@/lib/types/destination";
 
-const BookingCard = ({ destination }: { destinations: IDestination }) => {
+const BookingCard = ({ destination }: { destination: IDestination }) => {
   const { data: session } = authClient.useSession();
 
   const user = session?.user;
@@ -15,7 +16,7 @@ const BookingCard = ({ destination }: { destinations: IDestination }) => {
   // console.log(user);
   // console.log(destination);
 
-const handleBooking = async(e)=>{
+const handleBooking = async(e: React.SubmitEvent<HTMLElement>)=>{
     e.preventDefault()
 
     const departureDate = e.target.departureDate.value
@@ -70,8 +71,8 @@ const handleBooking = async(e)=>{
             type="date"
             name="departureDate"
             aria-label="Departure Date"
-            defaultValue={formatDay(destination.departureDate)}
-            //   defaultValue= {destination.departureDate}
+            // defaultValue={formatDay(destination.departureDate)}
+              defaultValue= {destination.departureDate}
             className="mt-4"
           />
 

@@ -13,7 +13,8 @@ import {
   CarouselItem,
   useCarousel,
 } from "@/components/ui/carousel";
-import type { IDestination } from "@/lib/types/destinations";
+import { IDestination } from "@/lib/types/destination";
+// import type { IDestination } from "@/lib/types/destinations";
 
 function FeaturedControls({ count }: { count: number }) {
   const { api, scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel();

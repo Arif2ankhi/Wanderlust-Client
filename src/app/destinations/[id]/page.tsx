@@ -66,7 +66,8 @@ export default async function DestinationsDetailsPage({
       <div className="mx-auto max-w-6xl px-6 py-20 text-center">
         <h2 className="text-2xl font-semibold text-neutral-900">Destination not found</h2>
         <p className="mt-2 text-sm text-neutral-500">The destination you are looking for does not exist or has been removed.</p>
-        <Button asChild className="mt-6">
+        <Button  className="mt-6">
+        {/* <Button asChild className="mt-6"> */}
           <Link href="/destinations">Back to Destinations</Link>
         </Button>
       </div>
